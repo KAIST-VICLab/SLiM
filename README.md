@@ -41,17 +41,17 @@ Official PyTorch implementation of **"Less is More: Decoder-Free Masked Modeling
 ---
 
 ## SLiM: Decoder-Free Unified Framework
-![motivation](assets/motivation.PNG)
+![motivation](assets/motivation.png)
 
 ---
 
 ## Overview of SLiM Framework
-![overview](assets/overview.PNG)
+![overview](assets/overview.png)
 
 ---
 
 ## Less Cost, More Accuracy
-![table](assets/table.PNG)
+![table](assets/table.png)
 
 ---
 
@@ -72,9 +72,6 @@ Official PyTorch implementation of **"Less is More: Decoder-Free Masked Modeling
 
 ## Results
 Please visit our [project page](https://kaist-viclab.github.io/SLiM_site/) for more experimental results.
-
-## License
-The source codes can be freely used for research and education only. Any commercial use should get formal permission from the principal investigator (Prof. Munchurl Kim, mkimee@kaist.ac.kr).
 
 ## Acknowledgements
 This repository is built upon [SkateFormer](https://github.com/KAIST-VICLab/SkateFormer/) and [TDSM](https://github.com/KAIST-VICLab/TDSM).
