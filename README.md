@@ -20,8 +20,8 @@
         <a href="https://kaist-viclab.github.io/SLiM_site/" target='_blank'>
         <img src="https://img.shields.io/badge/🏠-Project%20Page-blue">
         </a>
-        <a href="https://arxiv.org/abs/2411.10745" target='_blank'>
-        <img src="https://img.shields.io/badge/arXiv-2411.10745-b31b1b.svg">
+        <a href="https://arxiv.org/abs/2603.10648" target='_blank'>
+        <img src="https://img.shields.io/badge/arXiv-2603.10648-b31b1b.svg">
         </a>
         <img alt="GitHub Repo stars" src="https://img.shields.io/github/stars/KAIST-VICLab/SLiM">
     </h4>
@@ -64,7 +64,7 @@ Official PyTorch implementation of **"Less is More: Decoder-Free Masked Modeling
 @article{do2026less,
   title={Less is More: Decoder-Free Masked Modeling for Efficient Skeleton Representation Learning},
   author={Do, Jeonghyeok and Chen, Yun and Youk, Geunhyuk and Kim, Munchurl},
-  journal={arXiv preprint arXiv:2411.10745},
+  journal={arXiv preprint arXiv:2603.10648},
   year={2026}
 }
 ```
