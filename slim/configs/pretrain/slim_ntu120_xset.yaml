@@ -1,0 +1,6 @@
+# SLiM pre-training on NTU RGB+D 120, X-Set protocol.
+# Everything else is inherited from slim/configs/default_config.yaml.
+# Protocol-specific pre-training: only the 54,468 X-Set *training* clips are seen
+# (no labels), so the 59,477 X-Set test clips stay unseen until evaluation.
+train:
+  dataset_path: NTU:root=./data/ntu120/NTU120_CV.npz:split=TRAIN

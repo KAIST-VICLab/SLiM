@@ -1,0 +1,17 @@
+__pycache__/
+*.py[cod]
+*.egg-info/
+.ipynb_checkpoints/
+.idea/
+.vscode/
+.DS_Store
+
+# Data and experiment outputs (root-anchored: `data/` alone would also match slim/data/)
+/data/
+/outputs/
+/runs/
+*.log
+
+# Released weights are distributed via GitHub Releases, not tracked in git.
+checkpoints/*.pth
+checkpoints/linear/*.pth

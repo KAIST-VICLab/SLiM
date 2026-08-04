@@ -1,0 +1,6 @@
+# SLiM pre-training on NTU RGB+D 60, X-View protocol.
+# Everything else is inherited from slim/configs/default_config.yaml.
+# Protocol-specific pre-training: only the 37,646 X-View *training* clips are seen
+# (no labels), so the 18,932 X-View test clips stay unseen until evaluation.
+train:
+  dataset_path: NTU:root=./data/ntu/NTU60_XView.npz:split=TRAIN

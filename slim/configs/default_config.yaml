@@ -1,0 +1,123 @@
+MODEL:
+  WEIGHTS: ''
+compute_precision:
+  grad_scaler: true
+  teacher:
+    backbone:
+      sharding_strategy: SHARD_GRAD_OP
+      mixed_precision:
+        param_dtype: fp16
+        reduce_dtype: fp16
+        buffer_dtype: fp32
+    dino_head:
+      sharding_strategy: SHARD_GRAD_OP
+      mixed_precision:
+        param_dtype: fp16
+        reduce_dtype: fp16
+        buffer_dtype: fp32
+    ibot_head:
+      sharding_strategy: SHARD_GRAD_OP
+      mixed_precision:
+        param_dtype: fp16
+        reduce_dtype: fp16
+        buffer_dtype: fp32
+  student:
+    backbone:
+      sharding_strategy: SHARD_GRAD_OP
+      mixed_precision:
+        param_dtype: fp16
+        reduce_dtype: fp16
+        buffer_dtype: fp32
+    dino_head:
+      sharding_strategy: SHARD_GRAD_OP
+      mixed_precision:
+        param_dtype: fp16
+        reduce_dtype: fp32
+        buffer_dtype: fp32
+    ibot_head:
+      sharding_strategy: SHARD_GRAD_OP
+      mixed_precision:
+        param_dtype: fp16
+        reduce_dtype: fp32
+        buffer_dtype: fp32
+# GLCL: global-local contrastive learning (CLS branch)
+dino:
+  loss_weight: 1.0
+  head_n_prototypes: 65536
+  head_bottleneck_dim: 256
+  head_nlayers: 3
+  head_hidden_dim: 2048
+  koleo_loss_weight: 0.1
+# MFP: masked feature prediction (patch branch)
+ibot:
+  loss_weight: 1.0
+  mask_sample_probability: 0.5      # fraction of global views that are STM-masked
+  mask_ratio_min_max:
+  - 0.5
+  - 0.9
+  local_mask_ratio_min_max:
+  - 0.5
+  - 0.9
+  local_masking: true
+  separate_head: true               # MFP and GLCL use separate prototype heads
+  head_n_prototypes: 65536
+  head_bottleneck_dim: 256
+  head_nlayers: 3
+  head_hidden_dim: 2048
+train:
+  batch_size_per_gpu: 192
+  dataset_path: NTU:root=./data/ntu/NTU60_XSub.npz:split=TRAIN
+  output_dir: .
+  num_workers: 10
+  OFFICIAL_EPOCH_LENGTH: 1250
+  centering: "sinkhorn_knopp"       # or "centering"
+student:
+  arch: vit_tiny
+  patch_size:                       # (P_T, P_J)
+  - 8
+  - 1
+  drop_path_rate: 0.0
+  layerscale: 0.0
+  drop_path_uniform: true
+  pretrained_weights: ''
+  ffn_layer: swiglufused
+  block_chunks: 0
+  qkv_bias: true
+  proj_bias: true
+  ffn_bias: true
+  num_register_tokens: 4
+  in_chans: 3
+teacher:
+  momentum_teacher: 0.994
+  final_momentum_teacher: 1
+  warmup_teacher_temp: 0.04
+  teacher_temp: 0.07
+  warmup_teacher_temp_epochs: 30
+  in_chans: 3
+optim:
+  epochs: 150
+  weight_decay: 0.04
+  weight_decay_end: 0.2
+  base_lr: 2.0e-04                  # learning rate for a batch size of 1024
+  lr: 0.                            # set by the sqrt scaling rule
+  warmup_epochs: 20
+  min_lr: 1.0e-06
+  clip_grad: 3.0
+  freeze_last_layer_epochs: 1
+  scaling_rule: sqrt_wrt_1024
+  patch_embed_lr_mult: 0.2
+  layerwise_decay: 1.0
+  adamw_beta1: 0.9
+  adamw_beta2: 0.999
+crops:
+  num_joints: 25
+  num_people: 2
+  local_crops_number: 8
+  global_crops_size:                # (T, V) -> token grid 8 x 25
+  - 64
+  - 25
+  local_crops_size:
+  - 16
+  - 25
+evaluation:
+  eval_period_iterations: 12500

@@ -1,0 +1,6 @@
+# SLiM pre-training on NTU RGB+D 60, X-Sub protocol.
+# Everything else is inherited from slim/configs/default_config.yaml.
+# Protocol-specific pre-training: only the 40,091 X-Sub *training* clips are seen
+# (no labels), so the 16,487 X-Sub test clips stay unseen until evaluation.
+train:
+  dataset_path: NTU:root=./data/ntu/NTU60_XSub.npz:split=TRAIN

@@ -1,0 +1,29 @@
+# Encoder definition used by all downstream evaluations (linear / semi / k-NN).
+# Must match the architecture of the checkpoint being evaluated.
+student:
+  arch: vit_tiny
+  patch_size:
+  - 8
+  - 1
+  drop_path_rate: 0.0
+  layerscale: 0.0
+  drop_path_uniform: true
+  pretrained_weights: ''
+  ffn_layer: swiglufused
+  block_chunks: 0
+  qkv_bias: true
+  proj_bias: true
+  ffn_bias: true
+  num_register_tokens: 4
+  in_chans: 3
+
+crops:
+  num_joints: 25
+  num_people: 2
+  local_crops_number: 8
+  global_crops_size:
+  - 64
+  - 25
+  local_crops_size:
+  - 16
+  - 25

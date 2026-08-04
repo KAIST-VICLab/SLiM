@@ -1,0 +1,9 @@
+# Tested configuration: Python 3.9, CUDA 11.8, 4x NVIDIA RTX A6000 (48 GB).
+# Install PyTorch matching your CUDA version first, e.g.
+#   pip install torch==2.0.0 --index-url https://download.pytorch.org/whl/cu118
+torch==2.0.0
+xformers==0.0.19
+omegaconf==2.3.0
+fvcore==0.1.5.post20221221
+torchmetrics==0.10.3
+numpy==1.26.4
