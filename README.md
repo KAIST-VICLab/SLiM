@@ -23,6 +23,9 @@
         <a href="https://arxiv.org/abs/2603.10648" target='_blank'>
         <img src="https://img.shields.io/badge/arXiv-2603.10648-b31b1b.svg">
         </a>
+        <a href="https://huggingface.co/JeonghyeokDo" target='_blank'>
+        <img src="https://img.shields.io/badge/🤗-Models-yellow">
+        </a>
         <img alt="GitHub Repo stars" src="https://img.shields.io/github/stars/KAIST-VICLab/SLiM">
     </h4>
 </div>
@@ -56,7 +59,7 @@ Official PyTorch implementation of **"Less is More: Compact-Token Masked Feature
 ---
 
 ## 📧 News
-- **Aug 4, 2026:** Code released
+- **Aug 4, 2026:** Code and NTU-60 pre-trained weights released
 - **Mar 11, 2026:** This repository is created
 
 ---
@@ -120,25 +123,57 @@ preprocessed layout used by CrosSCLR / AimCLR / CMD.
 
 ## Pre-trained weights
 
-Not released yet — this repository is the code release. The checkpoints are being re-exported and
-re-verified, and will be published here together with a model card and sha256 sums once that is
-done. Everything below trains and evaluates SLiM from scratch.
+Encoder-only checkpoints (6.37 M parameters, ~25 MB). The prototype heads are discarded, as they
+are at transfer time. One checkpoint per evaluation protocol — the evaluated pre-training
+checkpoint with the highest linear accuracy on that protocol — with that protocol's trained
+linear probe under `linear/`.
 
-Export an encoder from your own pre-training run with `tools/export_encoder.py` (see
-[Pre-training](#pre-training)), then sanity-check it with:
+All checkpoints live in one repository, [JeonghyeokDo/SLiM](https://huggingface.co/JeonghyeokDo/SLiM),
+one subfolder per protocol:
+
+| subfolder | Protocol | Epoch | Top-1 |
+| --- | --- | ---: | ---: |
+| `ntu60_xsub`  | NTU-60 X-Sub  | 120 | 87.9 |
+| `ntu60_xview` | NTU-60 X-View | 150 | 93.2 |
+
+**NTU-120 weights are coming.** They are being re-exported and re-verified, and will be added to
+the same repository as `ntu120_xsub` and `ntu120_xset`.
+
+```python
+from slim.hub import SLiMEncoder
+
+model = SLiMEncoder.from_pretrained("JeonghyeokDo/SLiM", subfolder="ntu60_xsub").eval().cuda()
+feats = model.get_intermediate_layers(clips, 4, return_class_token=True)  # clips: (B, 3, 64, 25, M)
+```
+
+`from_pretrained` also takes a local directory holding `config.json` and `model.safetensors`, so
+it works on your own exports (see [Pre-training](#pre-training)). Sanity-check any checkpoint —
+downloaded or your own — with:
 
 ```bash
 python tools/verify_checkpoints.py       # needs a GPU — see the xFormers note above
 ```
 
-`slim/hub.py` loads an encoder from any local directory holding `config.json` and
-`model.safetensors`, and from a HuggingFace Hub repository once one exists:
+### Trained linear probes
 
-```python
-from slim.hub import SLiMEncoder
-model = SLiMEncoder.from_pretrained("path/to/exported_dir").eval().cuda()
-feats = model.get_intermediate_layers(clips, 4, return_class_token=True)  # clips: (B, 3, 64, 25, M)
+Each subfolder carries the linear-classifier grid trained for the linear-evaluation table under
+`linear/`. Download it into `checkpoints/linear/` and the encoder into `checkpoints/`;
+evaluating the pair reproduces the reported accuracy without retraining the probe:
+
+```bash
+CLASSIFIER=checkpoints/linear/slim_ntu60_best_xsub.pth \
+  scripts/eval_linear.sh checkpoints/slim_ntu60_best_xsub.pth outputs/lin_ntu60_xsub ntu60 xsub
 ```
+
+| Classifier | Encoder | Protocol | Top-1 |
+| --- | --- | --- | ---: |
+| `slim_ntu60_best_xsub.pth`  | `slim_ntu60_best_xsub.pth`  | NTU-60 X-Sub  | 87.88 |
+| `slim_ntu60_best_xview.pth` | `slim_ntu60_best_xview.pth` | NTU-60 X-View | 93.24 |
+
+Retraining a probe from scratch instead lands within ~0.25 points of these values — probe training
+depends on data order and on fp16/cuDNN algorithm selection, so small differences between
+environments are expected. k-NN retrieval needs no classifier and runs at 72.3 (X-Sub) and
+89.8 (X-View) on NTU-60 from the released encoder weights alone.
 
 ## Pre-training
 
@@ -185,17 +220,17 @@ If you change the number of GPUs, adjust `train.batch_size_per_gpu` so the effec
 
 ```bash
 # Linear evaluation
-scripts/eval_linear.sh checkpoints/ntu60_xsub.pth   outputs/lin_ntu60_xsub   ntu60  xsub
-scripts/eval_linear.sh checkpoints/ntu60_xview.pth  outputs/lin_ntu60_xview  ntu60  xview
+scripts/eval_linear.sh checkpoints/slim_ntu60_best_xsub.pth  outputs/lin_ntu60_xsub   ntu60  xsub
+scripts/eval_linear.sh checkpoints/slim_ntu60_best_xview.pth outputs/lin_ntu60_xview  ntu60  xview
 scripts/eval_linear.sh checkpoints/ntu120_xsub.pth  outputs/lin_ntu120_xsub  ntu120 xsub
 scripts/eval_linear.sh checkpoints/ntu120_xset.pth  outputs/lin_ntu120_xset  ntu120 xview
 
 # Semi-supervised fine-tuning, 1 % and 10 % of the labels (2 GPUs)
-scripts/eval_semi.sh checkpoints/ntu60_xsub.pth outputs/semi_001_xsub ntu60 xsub 0.01
-scripts/eval_semi.sh checkpoints/ntu60_xsub.pth outputs/semi_010_xsub ntu60 xsub 0.1
+scripts/eval_semi.sh checkpoints/slim_ntu60_best_xsub.pth outputs/semi_001_xsub ntu60 xsub 0.01
+scripts/eval_semi.sh checkpoints/slim_ntu60_best_xsub.pth outputs/semi_010_xsub ntu60 xsub 0.1
 
 # Action retrieval, k-NN
-scripts/eval_knn.sh checkpoints/ntu60_xsub.pth outputs/knn_ntu60_xsub ntu60 xsub
+scripts/eval_knn.sh checkpoints/slim_ntu60_best_xsub.pth outputs/knn_ntu60_xsub ntu60 xsub
 ```
 
 `xview` selects X-View on NTU-60 and X-Set on NTU-120. Accuracies are appended to

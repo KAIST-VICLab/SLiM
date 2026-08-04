@@ -4,7 +4,7 @@
 """HuggingFace Hub integration for the SLiM encoder.
 
     from slim.hub import SLiMEncoder
-    model = SLiMEncoder.from_pretrained("path/to/exported_dir").eval().cuda()
+    model = SLiMEncoder.from_pretrained("JeonghyeokDo/SLiM", subfolder="ntu60_xsub").eval().cuda()
 
 `from_pretrained` takes a local directory holding `config.json` and `model.safetensors`, or a
 HuggingFace Hub repository id. Requires `pip install huggingface_hub safetensors`; the rest of
