@@ -1,5 +1,5 @@
 <div align="center">
-<h2>Less is More: Compact-Token Masked Feature Learning for Skeleton Representation Learning</h2>
+<h2>[NeurIPS 2026] Less is More: Compact-Token Masked Feature Learning for Skeleton Representation Learning</h2>
 
 <div>    
     <a href='https://jeonghyeokdo.github.io/' target='_blank'>Jeonghyeok Do</a><sup>1</sup>&nbsp&nbsp&nbsp&nbsp;
@@ -20,6 +20,7 @@
         <a href="https://kaist-viclab.github.io/SLiM_site/" target='_blank'>
         <img src="https://img.shields.io/badge/🏠-Project%20Page-blue">
         </a>
+        <img src="https://img.shields.io/badge/2026-NeurIPS-brightgreen">
         <a href="https://arxiv.org/abs/2603.10648" target='_blank'>
         <img src="https://img.shields.io/badge/arXiv-2603.10648-b31b1b.svg">
         </a>
@@ -59,6 +60,7 @@ Official PyTorch implementation of **"Less is More: Compact-Token Masked Feature
 ---
 
 ## 📧 News
+- **Sep 25, 2026:** SLiM accepted to NeurIPS 2026. :tada:
 - **Aug 4, 2026:** Code and NTU-60 pre-trained weights released
 - **Mar 11, 2026:** This repository is created
 
@@ -276,10 +278,10 @@ Please visit our [project page](https://kaist-viclab.github.io/SLiM_site/) for m
 
 ## Reference
 ```BibTeX
-@article{do2026less,
+@inproceedings{do2026less,
   title={Less is More: Compact-Token Masked Feature Learning for Skeleton Representation Learning},
   author={Do, Jeonghyeok and Chen, Yun and Youk, Geunhyuk and Kim, Munchurl},
-  journal={arXiv preprint arXiv:2603.10648},
+  booktitle={Advances in Neural Information Processing Systems (NeurIPS)},
   year={2026}
 }
 ```
