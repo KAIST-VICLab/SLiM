@@ -138,9 +138,6 @@ one subfolder per protocol:
 | `ntu60_xsub`  | NTU-60 X-Sub  | 120 | 87.9 |
 | `ntu60_xview` | NTU-60 X-View | 150 | 93.2 |
 
-**NTU-120 weights are coming.** They are being re-exported and re-verified, and will be added to
-the same repository as `ntu120_xsub` and `ntu120_xset`.
-
 ```python
 from slim.hub import SLiMEncoder
 
