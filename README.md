@@ -24,7 +24,7 @@
         <a href="https://arxiv.org/abs/2603.10648" target='_blank'>
         <img src="https://img.shields.io/badge/arXiv-2603.10648-b31b1b.svg">
         </a>
-        <a href="https://huggingface.co/JeonghyeokDo" target='_blank'>
+        <a href="https://huggingface.co/JeonghyeokDo/SLiM" target='_blank'>
         <img src="https://img.shields.io/badge/🤗-Models-yellow">
         </a>
         <img alt="GitHub Repo stars" src="https://img.shields.io/github/stars/KAIST-VICLab/SLiM">
