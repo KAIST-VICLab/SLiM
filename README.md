@@ -1,18 +1,18 @@
 <div align="center">
-<h2>[NeurIPS 2026] Less is More: Compact-Token Masked Feature Learning for Skeleton Representation Learning</h2>
+<h2>[NeurIPS 2026] Less is More: Compact-Token Masked Feature Prediction for Skeleton Representation Learning</h2>
 
 <div>    
-    <a href='https://jeonghyeokdo.github.io/' target='_blank'>Jeonghyeok Do</a><sup>1</sup>&nbsp&nbsp&nbsp&nbsp;
-    <a href='https://therealchenyun.github.io/' target='_blank'>Yun Chen</a><sup>1</sup>&nbsp&nbsp&nbsp&nbsp;
-    <a href='https://geunhyukyouk.github.io/' target='_blank'>Geunhyuk Youk</a><sup>1</sup>&nbsp&nbsp&nbsp&nbsp;
+    <a href='https://jeonghyeokdo.github.io/' target='_blank'>Jeonghyeok Do</a><sup>1</sup>&nbsp;&nbsp;&nbsp;&nbsp;
+    <a href='https://therealchenyun.github.io/' target='_blank'>Yun Chen</a><sup>1</sup>&nbsp;&nbsp;&nbsp;&nbsp;
+    <a href='https://geunhyukyouk.github.io/' target='_blank'>Geunhyuk Youk</a><sup>1</sup>&nbsp;&nbsp;&nbsp;&nbsp;
     <a href='https://www.viclab.kaist.ac.kr' target='_blank'>Munchurl Kim</a><sup>1†</sup>
 </div>
 <br>
 <div>
-    <sup>†</sup>Corresponding author</span>
+    <sup>†</sup>Corresponding author
 </div>
 <div>
-    <sup>1</sup>Korea Advanced Institute of Science and Technology, South Korea</span>
+    <sup>1</sup>Korea Advanced Institute of Science and Technology, South Korea
 </div>
 
 <div>
@@ -34,28 +34,36 @@
 
 ---
 
-Official PyTorch implementation of **"Less is More: Compact-Token Masked Feature Learning for Skeleton Representation Learning"**.
+Official PyTorch implementation of **"Less is More: Compact-Token Masked Feature Prediction for Skeleton Representation Learning"**.
 
-**SLiM (Skeleton Less is More)** is a unified representation learning framework that bridges the gap between Masked Auto-Encoders (MAE) and Contrastive Learning (CL).
+**SLiM (Skeleton Less is More)** is a unified self-supervised framework that combines masked feature prediction (MFP) and contrastive learning (CL) on a compact token grid.
 
 * 🚀 **Extreme Efficiency:** A completely decoder-free architecture that reduces inference computational costs by **7.89×**.
 * 🧠 **Robust Representation:** Introduces **Semantic Tube Masking (STM)** and **Skeleton-Aware Augmentations (SAA)** to capture anatomically consistent motion dynamics without shortcut learning.
-* 🏆 **State-of-the-Art:** Achieves peak performance across NTU-60, NTU-120, and PKU-MMD II benchmarks.
+* 🏆 **State-of-the-Art:** Best linear-evaluation accuracy on NTU-60 and NTU-120 (second best on PKU-MMD II), the best 1% semi-supervised results, and the best retrieval accuracy.
 
 ---
 
 ## SLiM: Decoder-Free Unified Framework
-![motivation](assets/motivation.png)
+![motivation](assets/motivation.jpg)
 
 ---
 
 ## Overview of SLiM Framework
-![overview](assets/overview.png)
+![overview](assets/overview.jpg)
 
 ---
 
 ## Less Cost, More Accuracy
-![table](assets/table.png)
+Token budget and computational cost on NTU-60 (GFLOPs), with NTU-60 linear-evaluation accuracy (%).
+
+| Method | Venue | Tokens (N<sub>T</sub> × N<sub>J</sub>) | Inference: Encoder | Training: Encoder | Training: Decoder | X-Sub | X-View |
+| :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
+| SkeletonMAE | ICMEW'23 | 30 × 25 | 28.32 | 1.97 | 17.70 | 74.8 | 77.7 |
+| MAMP | ICCV'23 | 30 × 25 | 28.32 | 1.97 | 17.70 | 84.9 | 89.1 |
+| S-JEPA | ECCV'24 | 30 × 25 | 28.32 | 1.97 | 17.70 | 85.3 | 89.8 |
+| GFP | ICCV'25 | 30 × 25 | 28.32 | 1.97 | 1.57 | 85.9 | 92.0 |
+| **SLiM (Ours)** | – | 8 × 25 | **3.59** | 3.59 | – | **87.9** | **93.2** |
 
 ---
 
@@ -276,7 +284,7 @@ Please visit our [project page](https://kaist-viclab.github.io/SLiM_site/) for m
 ## Reference
 ```BibTeX
 @inproceedings{do2026less,
-  title={Less is More: Compact-Token Masked Feature Learning for Skeleton Representation Learning},
+  title={Less is More: Compact-Token Masked Feature Prediction for Skeleton Representation Learning},
   author={Do, Jeonghyeok and Chen, Yun and Youk, Geunhyuk and Kim, Munchurl},
   booktitle={Advances in Neural Information Processing Systems (NeurIPS)},
   year={2026}
