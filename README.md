@@ -24,6 +24,9 @@
         <a href="https://arxiv.org/abs/2603.10648" target='_blank'>
         <img src="https://img.shields.io/badge/arXiv-2603.10648-b31b1b.svg">
         </a>
+        <a href="https://youtu.be/cePWsYhS08E" target='_blank'>
+        <img src="https://img.shields.io/badge/Presentation-%23FF0000.svg?logo=YouTube&logoColor=white">
+        </a>
         <a href="https://huggingface.co/JeonghyeokDo/SLiM" target='_blank'>
         <img src="https://img.shields.io/badge/🤗-Models-yellow">
         </a>
